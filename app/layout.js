@@ -1,8 +1,11 @@
-
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/Navigation";
 import FinanceContextProvider from "@/libs/store/finance-context";
+import AuthContextProvider from "@/libs/store/auth-context";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -24,10 +27,13 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <FinanceContextProvider>
-          <Nav />
-          {children}
-        </FinanceContextProvider>
+        <AuthContextProvider>
+          <FinanceContextProvider>
+            <ToastContainer/>
+              <Nav />
+              {children}
+          </FinanceContextProvider>
+        </AuthContextProvider>
       </body>
     </html>
   );
